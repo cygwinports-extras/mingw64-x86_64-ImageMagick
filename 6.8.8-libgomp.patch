@@ -1,0 +1,11 @@
+--- origsrc/ImageMagick-6.8.8-5/configure.ac	2014-02-11 04:48:05.976850600 -0600
++++ src/ImageMagick-6.8.8-5/configure.ac	2014-02-11 05:11:27.635486100 -0600
+@@ -1409,7 +1409,7 @@ if test "$enable_openmp" != 'no'; then
+     fi
+     # GCC
+     if test "x$GOMP_LIBS" = x ; then
+-      AC_CHECK_LIB(gomp,GOMP_parallel_start,GOMP_LIBS="-lgomp",,)
++      AC_CHECK_LIB(gomp,GOMP_parallel_start,GOMP_LIBS="-fopenmp",,)
+     fi
+   else
+     # Sun CC

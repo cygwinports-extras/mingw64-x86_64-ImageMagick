@@ -1,0 +1,41 @@
+--- origsrc/ImageMagick-6.8.8-5/coders/emf.c	2014-01-23 15:35:58.000000000 -0600
++++ src/ImageMagick-6.8.8-5/coders/emf.c	2014-02-11 01:49:54.556580700 -0600
+@@ -42,7 +42,7 @@
+ #include "magick/studio.h"
+ #if defined(MAGICKCORE_WINGDI32_DELEGATE)
+ #  if !defined(_MSC_VER)
+-#    if defined(__CYGWIN__)
++#    if defined(__CYGWIN__) || defined(__MINGW64_VERSION_MAJOR)
+ #      include <windows.h>
+ #    else
+ #      include <wingdi.h>
+--- origsrc/ImageMagick-6.8.8-5/coders/svg.c	2014-02-05 06:25:17.000000000 -0600
++++ src/ImageMagick-6.8.8-5/coders/svg.c	2014-02-11 23:56:12.924429000 -0600
+@@ -76,9 +76,7 @@
+ #include "magick/utility.h"
+ #if defined(MAGICKCORE_XML_DELEGATE)
+ #  if defined(MAGICKCORE_WINDOWS_SUPPORT)
+-#    if defined(__MINGW32__) || defined(__MINGW64__)
+-#      define _MSC_VER
+-#    else
++#    if !defined(__MINGW32__) && !defined(__MINGW64__)
+ #      include <win32config.h>
+ #    endif
+ #  endif
+--- origsrc/ImageMagick-6.8.8-5/magick/nt-base-private.h	2014-02-08 10:04:40.000000000 -0600
++++ src/ImageMagick-6.8.8-5/magick/nt-base-private.h	2014-02-11 01:33:21.117055900 -0600
+@@ -141,12 +141,14 @@ extern "C" {
+ #if !defined(locale_t)
+ #define locale_t _locale_t
+ #endif
++#if !defined(lseek)
+ #if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(Windows95) && \
+   !(defined(_MSC_VER) && (_MSC_VER < 1400)) && (__MSVCRT_VERSION__ < 0x800)
+ #  define lseek  _lseeki64
+ #else
+ #  define lseek  _lseek
+ #endif
++#endif
+ #if !defined(MAGICKCORE_LTDL_DELEGATE)
+ #if !defined(lt_dlclose)
+ #  define lt_dlclose(handle)  NTCloseLibrary(handle)
