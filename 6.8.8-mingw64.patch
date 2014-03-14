@@ -22,8 +22,8 @@
  #      include <win32config.h>
  #    endif
  #  endif
---- origsrc/ImageMagick-6.8.8-5/magick/nt-base-private.h	2014-02-08 10:04:40.000000000 -0600
-+++ src/ImageMagick-6.8.8-5/magick/nt-base-private.h	2014-02-11 01:33:21.117055900 -0600
+--- origsrc/ImageMagick-6.8.8-8/magick/nt-base.h	2014-02-08 10:04:40.000000000 -0600
++++ src/ImageMagick-6.8.8-8/magick/nt-base.h	2014-02-11 01:33:21.117055900 -0600
 @@ -141,12 +141,14 @@ extern "C" {
  #if !defined(locale_t)
  #define locale_t _locale_t
