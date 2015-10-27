@@ -2,7 +2,7 @@ CROSS_HOST="x86_64-w64-mingw32"
 inherit cross
 
 NAME="mingw64-x86_64-ImageMagick"
-VERSION=6.8.9-10
+VERSION=6.9.2.4
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="Image manipulation library for Win64 toolchain"
@@ -12,11 +12,11 @@ formats. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and
 transform images, adjust image colors, apply various special effects, or
 draw text, lines, polygons, ellipses and Bezier curves."
 HOMEPAGE="http://www.imagemagick.org/"
-SRC_URI="http://www.imagemagick.org/download/releases/ImageMagick-${VERSION}.tar.xz"
-SRC_DIR="ImageMagick-${VERSION}"
+SRC_URI="http://www.imagemagick.org/download/releases/ImageMagick-${VERSION%.*}-${VERSION##*.}.tar.xz"
+SRC_DIR="ImageMagick-${VERSION%.*}-${VERSION##*.}"
 PATCH_URI="
 	6.8.8-libgomp.patch
-	6.8.8-mingw64.patch
+	6.9.2-mingw64.patch
 "
 
 DIFF_EXCLUDES="PerlMagick *-config.h version.h ltdl m4 *.1 tap-driver.sh"
@@ -28,16 +28,15 @@ src_compile() {
 	cd ${B}
 	# autotrace: circular dependency on ImageMagick
 	# fpx: libfpx doesn't compile cleanly on mingw
-	# openjp2: still have openjpeg-1.x
 	# wmf: only works --with-modules due to MagickWand dependency
 	cygconf --without-modules --with-quantum-depth=16 \
 		--without-autotrace --with-bzlib --with-djvu --without-dps \
 		--with-fftw --with-fontconfig --without-fpx --with-freetype \
 		--without-gslib --without-gvc --with-jbig --with-jpeg \
 		--without-lcms --with-lcms2 --with-lqr --with-lzma \
-		--with-openexr --without-openjp2 --with-pango --with-png \
+		--with-openexr --with-openjp2 --with-pango --with-png \
 		--with-rsvg --with-tiff --with-webp --without-wmf --without-x \
-		--with-xml --with-zlib --without-perl
+		--with-xml --with-zlib --without-perl --disable-static
 	cygmake
 }
 
